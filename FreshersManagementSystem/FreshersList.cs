@@ -30,7 +30,9 @@
         {
             List<string> lines = File.ReadAllLines(filePath).ToList();
                                     
-            lines.Add($"{ fresher.Id },{fresher.Name},{fresher.MobileNumber},{fresher.Address},{fresher.DateOfBirth.ToShortDateString()},{fresher.Qualification}");
+            lines.Add($"{ fresher.Id },{fresher.Name},{fresher.MobileNumber}," +
+                $"{fresher.Address},{fresher.DateOfBirth.ToShortDateString()}," +
+                $"{fresher.Qualification}");
             
             File.WriteAllLines(filePath, lines);
         }
@@ -40,17 +42,24 @@
             List<Fresher> freshers = storeDataToListFromFile();
             foreach (var fresher in freshers)
             {
-                Console.WriteLine($"Id: {fresher.Id}, Name: {fresher.Name}, MobileNumber: {fresher.MobileNumber}, Address: {fresher.Address}, DOB: {fresher.DateOfBirth.ToShortDateString()}, Qualification: {fresher.Qualification}");
+                Console.WriteLine($"Id: {fresher.Id}, Name: {fresher.Name}," +
+                    $" MobileNumber: {fresher.MobileNumber}, Address: {fresher.Address}," +
+                    $" DOB: {fresher.DateOfBirth.ToShortDateString()}," +
+                    $" Qualification: {fresher.Qualification}");
             }        
         }
 
         public void getFreshersByLettersOfName(string searchInput)
         {
             List<Fresher> freshers = storeDataToListFromFile();
-            var matchingFreshersList = freshers.Where(fresher => fresher.Name.Contains(searchInput, StringComparison.OrdinalIgnoreCase)).ToList();
+            var matchingFreshersList = freshers.Where(fresher => 
+                    fresher.Name.Contains(searchInput, StringComparison.OrdinalIgnoreCase)).ToList();
             foreach (var fresher in matchingFreshersList)
             {
-                Console.WriteLine($"Id: {fresher.Id}, Name: {fresher.Name}, MobileNumber: {fresher.MobileNumber}, Address: {fresher.Address}, DOB: {fresher.DateOfBirth}, Qualification: {fresher.Qualification}");
+                Console.WriteLine($"Id: {fresher.Id}, Name: {fresher.Name}," +
+                    $" MobileNumber: {fresher.MobileNumber}, Address: {fresher.Address}," +
+                    $" DOB: {fresher.DateOfBirth.ToShortDateString()}," +
+                    $" Qualification: {fresher.Qualification}");
             }
         }
 
@@ -61,7 +70,10 @@
             {
                 if (fresher.Id == searchInput)
                 {
-                    Console.WriteLine($"Id: {fresher.Id}, Name: {fresher.Name}, MobileNumber: {fresher.MobileNumber}, Address: {fresher.Address}, DOB: {fresher.DateOfBirth}, Qualification: {fresher.Qualification}");
+                    Console.WriteLine($"Id: {fresher.Id}, Name: {fresher.Name}, " +
+                        $"MobileNumber: {fresher.MobileNumber}, Address: {fresher.Address}," +
+                        $" DOB: {fresher.DateOfBirth.ToShortDateString()}, " +
+                        $" Qualification: {fresher.Qualification}");
                     return;
                 }                
             }
