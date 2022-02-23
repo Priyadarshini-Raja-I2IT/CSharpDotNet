@@ -2,16 +2,16 @@
 {
     class FreshersList
     {
-        string filePath = @"C:\Users\Lenovo\Documents\FreshersManagementSystem\FreshersInfo.txt";
+        private readonly string _filePath = @"C:\Users\Lenovo\Documents\FreshersManagementSystem\FreshersInfo.txt";
 
-        public List<Fresher> storeDataToListFromFile()
+        public List<Fresher> StoreDataToListFromFile()
         {
-            List<string> lines = File.ReadAllLines(filePath).ToList();
-            List<Fresher> freshers = new List<Fresher>();
+            List<string> lines = File.ReadAllLines(_filePath).ToList();
+            List<Fresher> freshers = new();
 
             foreach (string line in lines)
             {
-                Fresher newFresher = new Fresher();
+                Fresher newFresher = new();
                 string[] entries = line.Split(',');
 
                 newFresher.Id = int.Parse(entries[0]);
@@ -23,36 +23,36 @@
 
                 freshers.Add(newFresher);
             }
-           
+
             return freshers;
         }
-        public void addFresher(Fresher fresher)
+        public void AddFresher(Fresher fresher)
         {
-            List<string> lines = File.ReadAllLines(filePath).ToList();
-                                    
+            List<string> lines = File.ReadAllLines(_filePath).ToList();
+
             lines.Add($"{ fresher.Id },{fresher.Name},{fresher.MobileNumber}," +
                 $"{fresher.Address},{fresher.DateOfBirth.ToShortDateString()}," +
                 $"{fresher.Qualification}");
-            
-            File.WriteAllLines(filePath, lines);
+
+            File.WriteAllLines(_filePath, lines);
         }
 
-        public void getAllFreshers()
+        public void GetAllFreshers()
         {
-            List<Fresher> freshers = storeDataToListFromFile();
+            List<Fresher> freshers = StoreDataToListFromFile();
             foreach (var fresher in freshers)
             {
                 Console.WriteLine($"Id: {fresher.Id}, Name: {fresher.Name}," +
                     $" MobileNumber: {fresher.MobileNumber}, Address: {fresher.Address}," +
                     $" DOB: {fresher.DateOfBirth.ToShortDateString()}," +
                     $" Qualification: {fresher.Qualification}");
-            }        
+            }
         }
 
-        public void getFreshersByLettersOfName(string searchInput)
+        public void GetFreshersByLettersOfName(string searchInput)
         {
-            List<Fresher> freshers = storeDataToListFromFile();
-            var matchingFreshersList = freshers.Where(fresher => 
+            List<Fresher> freshers = StoreDataToListFromFile();
+            var matchingFreshersList = freshers.Where(fresher =>
                     fresher.Name.Contains(searchInput, StringComparison.OrdinalIgnoreCase)).ToList();
             foreach (var fresher in matchingFreshersList)
             {
@@ -63,9 +63,9 @@
             }
         }
 
-        public void getFresherById(int searchInput)
+        public void GetFresherById(int searchInput)
         {
-            List<Fresher> freshers = storeDataToListFromFile();
+            List<Fresher> freshers = StoreDataToListFromFile();
             foreach (var fresher in freshers)
             {
                 if (fresher.Id == searchInput)
@@ -75,7 +75,7 @@
                         $" DOB: {fresher.DateOfBirth.ToShortDateString()}, " +
                         $" Qualification: {fresher.Qualification}");
                     return;
-                }                
+                }
             }
         }
     }

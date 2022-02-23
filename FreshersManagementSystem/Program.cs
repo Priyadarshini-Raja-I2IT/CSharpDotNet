@@ -4,10 +4,10 @@ namespace FreshersManagementSystem
 {
     class Program
     {
-        public static void Main(String[] args)
-        {        
+        public static void Main()
+        {
             int userInput;
-            FreshersList freshersList = new FreshersList();
+            FreshersList freshersList = new();
             Console.WriteLine("<-- FRESHERS MANAGEMENT SYSTEM -->");
             StringBuilder options = new StringBuilder("\n\nSelect Operation:\n")
                    .Append("\n1. Add fresher\n2. Get all freshers details\n")
@@ -15,19 +15,19 @@ namespace FreshersManagementSystem
 
             do
             {
-                Console.WriteLine(options);         
-                userInput = getValidUserInput();
+                Console.WriteLine(options);
+                userInput = GetValidUserInput();
 
                 switch (userInput)
                 {
                     case 1:
-                        addFresher(freshersList);
+                        AddFresher(freshersList);
                         break;
                     case 2:
-                        getAllFreshers(freshersList);
+                        GetAllFreshers(freshersList);
                         break;
                     case 3:
-                        searchFresher(freshersList);
+                        SearchFresher(freshersList);
                         break;
                     case 4:
                         Console.WriteLine("Good bye!");
@@ -37,10 +37,10 @@ namespace FreshersManagementSystem
                         break;
                 }
             } while (4 != userInput);
-            
+
         }
 
-        private static int getValidUserInput()
+        private static int GetValidUserInput()
         {
             int input = 0;
             bool isValidInput;
@@ -62,26 +62,26 @@ namespace FreshersManagementSystem
             return input;
         }
 
-        private static void addFresher(FreshersList freshersList)
-        { 
+        private static void AddFresher(FreshersList freshersList)
+        {
             Console.WriteLine("\nHow many freshers details do you want to add? ");
             int numberOfInputs = Convert.ToInt32(Console.ReadLine());
 
             for (int input = 1; input <= numberOfInputs; input++)
             {
                 Console.WriteLine("\nEnter details of fresher: {0}", input);
-                int id = getId();
-                string name = getName();
-                long mobileNumber = getMobileNumber();
-                string address = getAddress();
-                DateTime dateOfBirth = getDateOfBirth();
-                string qualification = getQualification();
-                Fresher fresher = new Fresher(id, name, mobileNumber, address, dateOfBirth, qualification);
-                freshersList.addFresher(fresher);
+                int id = GetId();
+                string name = GetName();
+                long mobileNumber = GetMobileNumber();
+                string address = GetAddress();
+                DateTime dateOfBirth = GetDateOfBirth();
+                string qualification = GetQualification();
+                Fresher fresher = new(id, name, mobileNumber, address, dateOfBirth, qualification);
+                freshersList.AddFresher(fresher);
             }
         }
 
-        private static string getQualification()
+        private static string GetQualification()
         {
             string qualification;
             bool isEmpty;
@@ -102,7 +102,7 @@ namespace FreshersManagementSystem
             return qualification;
         }
 
-        private static DateTime getDateOfBirth()
+        private static DateTime GetDateOfBirth()
         {
             DateTime dateOfBirth;
             bool isValidDOB;
@@ -118,7 +118,7 @@ namespace FreshersManagementSystem
                     Console.WriteLine("Age should be greater than 18. But, the age is " + CalculateYears(dateOfBirth));
                     isValidDOB = false;
                 }
-                    
+
             } while (!isValidDOB);
 
             return dateOfBirth;
@@ -126,15 +126,14 @@ namespace FreshersManagementSystem
 
         public static int CalculateYears(DateTime dob)
         {
-            int age = 0;
-            age = DateTime.Now.Year - dob.Year;
+            int age = DateTime.Now.Year - dob.Year;
             if (DateTime.Now.DayOfYear < dob.DayOfYear)
-                age = age - 1;
+                age--;
 
             return age;
         }
 
-        private static string getAddress()
+        private static string GetAddress()
         {
             string address;
             bool isValidAddress;
@@ -155,9 +154,9 @@ namespace FreshersManagementSystem
             return address;
         }
 
-        private static long getMobileNumber()
+        private static long GetMobileNumber()
         {
-            long mobileNumber = 0;
+            long mobileNumber;
             bool isValidMobileNumber;
 
             do
@@ -176,7 +175,7 @@ namespace FreshersManagementSystem
             return mobileNumber;
         }
 
-        private static string getName()
+        private static string GetName()
         {
             string name;
             bool isValidName;
@@ -197,9 +196,9 @@ namespace FreshersManagementSystem
             return name;
         }
 
-        private static int getId()
+        private static int GetId()
         {
-            int id = 0;
+            int id;
             bool isValidId;
 
             do
@@ -218,13 +217,13 @@ namespace FreshersManagementSystem
             return id;
         }
 
-        private static void getAllFreshers(FreshersList freshersList)
+        private static void GetAllFreshers(FreshersList freshersList)
         {
-            freshersList.getAllFreshers();
+            freshersList.GetAllFreshers();
         }
 
 
-        private static void searchFresher(FreshersList freshersList)
+        private static void SearchFresher(FreshersList freshersList)
         {
             int userInput;
             StringBuilder searchOptions = new StringBuilder("\nSelect Search Operation:\n")
@@ -234,15 +233,15 @@ namespace FreshersManagementSystem
             do
             {
                 Console.WriteLine(searchOptions);
-                userInput = getValidUserInput();
+                userInput = GetValidUserInput();
 
                 switch (userInput)
                 {
                     case 1:
-                        searchById(freshersList);
+                        SearchById(freshersList);
                         break;
                     case 2:
-                        searchByName(freshersList);
+                        SearchByName(freshersList);
                         break;
                     case 3:
                         break;
@@ -253,18 +252,18 @@ namespace FreshersManagementSystem
             } while (3 != userInput);
         }
 
-        private static void searchByName(FreshersList freshersList)
+        private static void SearchByName(FreshersList freshersList)
         {
             Console.WriteLine("Enter any letter or letters from name of the fresher");
             var searchInput = Console.ReadLine();
-            freshersList.getFreshersByLettersOfName(searchInput);
+            freshersList.GetFreshersByLettersOfName(searchInput);
         }
 
-        private static void searchById(FreshersList freshersList)
+        private static void SearchById(FreshersList freshersList)
         {
-            Console.WriteLine("Enter any letter or letters from name of the fresher");
-            int searchInput = getValidUserInput();
-            freshersList.getFresherById(searchInput);
+            Console.WriteLine("Enter Id of the fresher");
+            int searchInput = GetValidUserInput();
+            freshersList.GetFresherById(searchInput);
         }
     }
 }
